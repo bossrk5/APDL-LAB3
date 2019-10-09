@@ -78,17 +78,27 @@ finish
 /solution
 	antype,trans ! анализ переходных процессов
     nlgeom,on ! большие перемещения
+	outres,all,all ! выдавать результаты на каждом шаге
 	timint,off
 	da,all,uy,-deltaH
 	time,deltaH/V
-nsubst,1	
+	nsubst,1	
 	solve
+    
 	timint,on	! включаем интергирование
 	dadele,all,uy	!удаляем жесткое смещение
 	
-	time,sqrt(2*H/9.8)*2 ! конечное время умнож на полупериод
-	nsubst,1000 ! начальное количество разбиений
-
-	outres,all,all ! выдавать результаты на каждом шаге
+	!contact
+	time,0.0004
+	nsubst,1000
 	solve
+	
+	time,sqrt(2*H/9.8)*2 ! конечное время умнож на полупериод
+	nsubst,1000
+	solve
+	
+	!nsubst,10000,10000,1000 ! начальное количество разбиений
+
+
+	!solve
 finish
